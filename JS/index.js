@@ -1,15 +1,11 @@
 window.addEventListener("load", iniciar);
 function iniciar() {
     var busqueda=document.getElementById("busqueda");
-    busqueda.addEventListener("input",function(e){
-        e.preventDefault();
-        getJSON(busqueda.value);
-    })
-    busqueda.addEventListener("click", function(){
-        busqueda.value="";
-    })
     var portadas = document.getElementsByClassName("portada");
     var descripcion = document.getElementsByClassName("card-text");
+    var titulos=document.getElementsByClassName("titulo");
+    var precios=document.getElementsByClassName("precio");
+    var botonesCompra=document.getElementsByClassName("comprar");
     function getJSON(libro) {
         var xhr = new XMLHttpRequest(); //Se crea el objeto
         xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q="+libro, true); //Abrir una petición
@@ -44,18 +40,28 @@ function iniciar() {
         //document.getElementById("foto").setAttribute("src",jsonDoc.items[1].volumeInfo.imageLinks.smallThumbnail );
 
         // if(libros.length < portadas.length){
-        //     console.log(libros.length);
-        //     console.log(libros);
-        //     console.log(portadas.length);
-        //     for (let index = 0; index < (portadas.length-libros.length); index++) {
-               
-                
+        //     let diferencia=portadas.length-libros.length;
+        //     console.log("Diferencia: "+diferencia);
+        //     for (let index = portadas.length-diferencia; index < portadas.length; index++) {
+        //        descripcion[index].parentElement.parentElement.parentElement.remove();
+        //        index--;
         //     }
         // }
+        console.log(botonesCompra);
         for (let index = 0; index < libros.length; index++) {
             
             portadas[index].setAttribute("src", libros[index].volumeInfo.imageLinks.thumbnail);
             descripcion[index].innerText = libros[index].volumeInfo.description;
+            titulos[index].innerText=libros[index].volumeInfo.title;
+            if(libros[index].saleInfo.saleability == "FOR_SALE"){
+            precios[index].innerText=libros[index].saleInfo.listPrice.amount+"€";
+            botonesCompra[index].setAttribute("style", "display:block;");
+                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:1;");
+            }else{
+                precios[index].innerText="Producto no disponible";
+                botonesCompra[index].setAttribute("style", "display:none;");
+                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:0.4;");
+            }
         }
         for (let index = 0; index < descripcion.length; index++) {
             if(descripcion[index].innerText=="prueba"){
@@ -66,6 +72,12 @@ function iniciar() {
          }
     }
     getJSON("*");
+    busqueda.addEventListener("input",function(e){
+        getJSON(busqueda.value);
+    })
+    busqueda.addEventListener("click", function(){
+        busqueda.value="";
+    })
     
 
 }
