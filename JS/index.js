@@ -1,11 +1,18 @@
 window.addEventListener("load", iniciar);
 function iniciar() {
-   
+    var busqueda=document.getElementById("busqueda");
+    busqueda.addEventListener("input",function(e){
+        e.preventDefault();
+        getJSON(busqueda.value);
+    })
+    busqueda.addEventListener("click", function(){
+        busqueda.value="";
+    })
     var portadas = document.getElementsByClassName("portada");
     var descripcion = document.getElementsByClassName("card-text");
-    function getJSON() {
+    function getJSON(libro) {
         var xhr = new XMLHttpRequest(); //Se crea el objeto
-        xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=*", true); //Abrir una petición
+        xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q="+libro, true); //Abrir una petición
         xhr.onreadystatechange = function () { //función callback
             if (this.readyState == 4 && //para cuando se 
                 this.status == 200) { //reciba la respuesta
@@ -58,7 +65,7 @@ function iniciar() {
             }
          }
     }
-    getJSON();
+    getJSON("*");
     
 
 }
