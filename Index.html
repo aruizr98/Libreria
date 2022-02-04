@@ -90,15 +90,29 @@
 
         <div class="text-end">
           <button onclick="location.href='iniciarSesion.html'" type="button"
-            class="btn btn-outline-primary me-2 ">Iniciar sesión</button>
-          <button onclick="location.href='registro.html'" type="button" class="btn btn-warning">Registrarse</button>
+            class="btn btn-outline-primary me-2 " id="botoniniciarSesion">Iniciar sesión</button>
+          <button onclick="location.href='registro.html'" id="botonRegistrarse" type="button" class="btn btn-warning">Registrarse</button>
+          <div id="conectadoComo">
+             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Mi cuenta</a></li>
+              <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
+              <li><button class="dropdown-item" id="botonCerrarSesion">Cerrar Sesión</button></li>
+            </ul>
+          </div>
+           
+          
         </div>
         <div class="nav-link">
 
-          <div class="form-check form-switch">
+          <!-- <div class="form-check form-switch">
             <input type="checkbox" class="form-check-input" id="darkSwitch">
             <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
-          </div>
+          </div> -->
+          
           <script src="dark-mode-switch.min.js"></script>
 
         </div>
