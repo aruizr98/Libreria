@@ -12,18 +12,25 @@ function iniciar() {
     var botonIniciarSesion = document.getElementById("botoniniciarSesion");
     var botonRegistrarse = document.getElementById("botonRegistrarse");
     var botonCerrarSesion=document.getElementById("botonCerrarSesion");
+    var carrito=document.getElementById("carrito");
     var limite;
+    var imagenesCarrousel=document.getElementsByClassName("imagenCarrousel");
 
     function getJSON(libro) {
         var xhr = new XMLHttpRequest(); //Se crea el objeto
+        var respuesta;
         xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + libro, true); //Abrir una petición
         xhr.onreadystatechange = function () { //función callback
             if (this.readyState == 4 && //para cuando se 
                 this.status == 200) { //reciba la respuesta
                 procesarJSON(this);
-            }
+                if(libro=="*"){
+                    mostrarLibros(this);
+                }
+            }   
 
         };
+        
         xhr.send(); //enviar petición
     }
 
@@ -116,19 +123,45 @@ function iniciar() {
                 descripcion[index].parentElement.parentElement.parentElement.setAttribute("style", "display:block;");
             }
         }
+        /**
+         * Muestra imágenes en el carrousel
+         */
+        // for (let index = 0; index < imagenesCarrousel.length; index++) {
+        //     imagenesCarrousel[index].src=libros[index].volumeInfo.imageLinks.thumbnail;
+            
+        // }    
     }
+    function mostrarLibros(xhr){
+        var jsonDoc = JSON.parse(xhr.responseText);
+        var libros = new Array();
+        /*Obtener solamente los libros que tienen descripción y portada
+         para que no aparezca undefined en la descripción en caso de no tenerla.
+        */
+        for (let index = 0; index < jsonDoc.items.length; index++) {
+            if (jsonDoc.items[index].volumeInfo.description != undefined && jsonDoc.items[index].volumeInfo.imageLinks != undefined) {
+                libros.push(jsonDoc.items[index]);
+            }
+        }
+        
+        for (let index = 0; index < imagenesCarrousel.length; index++) {
+            imagenesCarrousel[index].src=libros[index].volumeInfo.imageLinks.thumbnail;
+            
+        }
+    }
+  
     function cerrarSesion(){
         sessionStorage.setItem("conectado", "false");
         location.reload();
     }
     getJSON("*");
     if (sessionStorage.getItem("conectado") == "true") {
-        console.log("aaaaa");
         conectadoComo.firstElementChild.innerText = "Conectado como: " + localStorage.getItem("nombreUsuario");
         console.log(botonIniciarSesion);
         console.log(botonRegistrarse);
         botonIniciarSesion.setAttribute("style", "display:none;");
         botonRegistrarse.setAttribute("style", "display:none;");
+        carrito.setAttribute("style","float:right;");
+        conectadoComo.setAttribute("style", "float:left;");
     } else {
         conectadoComo.setAttribute("style", "display:none;");
         botonIniciarSesion.setAttribute("style", "display:'';");
