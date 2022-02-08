@@ -5,6 +5,7 @@ function iniciar() {
     var portadas = document.getElementsByClassName("portada");
     var descripcion = document.getElementsByClassName("card-text");
     var titulos = document.getElementsByClassName("titulo");
+    var autores=document.getElementsByClassName("autor");
     var precios = document.getElementsByClassName("precio");
     var ofertas = document.getElementsByClassName("oferta");
     var botonesCompra = document.getElementsByClassName("comprar");
@@ -86,6 +87,7 @@ function iniciar() {
             portadas[index].setAttribute("src", libros[index].volumeInfo.imageLinks.thumbnail);
             descripcion[index].innerText = libros[index].volumeInfo.description;
             titulos[index].innerText = libros[index].volumeInfo.title;
+            autores[index].innerText=libros[index].volumeInfo.authors[0];
 
             if (libros[index].saleInfo.saleability == "FOR_SALE") {
                 /*
@@ -138,13 +140,29 @@ function iniciar() {
 
 
         function agregarACesta(descripcion) {
+            var titulo;
+            var contador=0;
             for (let index = 0; index < libros.length; index++) {
-                if (libros[index].volumeInfo.description == descripcion) { // A partir del título, se obtiene el objeto completo de ese libro
+                if (libros[index].volumeInfo.description == descripcion.innerText) { // A partir de la descripción, se obtiene el objeto completo de ese libro
+                    titulo=libros[index].volumeInfo.title;
                     cesta.push(libros[index]); // Y se añade a la cesta
-                    evitarDuplicados(cesta);
+                    for (let index = 0; index < cesta.length; index++) {
+                        if(cesta[index].volumeInfo.title == titulo){
+                            contador++;
+                        }
+                        
+                    }
+                    evitarDuplicados(cesta); // Se eliminan los posibles duplicados
+                   // mostrarNotificacion(descripcion.previousElementSibling.previousElementSibling.previousElementSibling.innerText);
+                   //mostrarNotificacion(libros[index].volumeInfo.title);
+                   
                 }
 
             }
+            if(titulo != undefined && contador==1){
+                mostrarNotificacion(titulo); 
+            }
+           
             numeroCompras.innerText = cesta.length;
             localStorage.setItem("cesta", JSON.stringify(cesta));
             console.log(cesta);
@@ -157,9 +175,10 @@ function iniciar() {
          */
         for (let index = 0; index < agregarCesta.length; index++) {
             agregarCesta[index].addEventListener("click", function () {
-                var descripcion = this.parentElement.parentElement.previousElementSibling.innerText;
+                var descripcion = this.parentElement.parentElement.previousElementSibling;
                 agregarACesta(descripcion);
-                mostrarNotificacion();
+                console.log("AGREGADO")
+               // mostrarNotificacion(this.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText);
             })
         }
 
@@ -187,10 +206,10 @@ function iniciar() {
     function preguntar() {
         Notification.requestPermission()
     }
-    function mostrarNotificacion() {
+    function mostrarNotificacion(titulo) {
         if (Notification.permission == 'granted') {
             const notificacion = new Notification('Te notificamos...', {
-                body: "¡Libro añadido al carrito!"
+                body: titulo+" añadido al carrito!"
             });
 
         }
@@ -223,6 +242,7 @@ function iniciar() {
      * comparando el id de cada uno de ellos
      */
     function evitarDuplicados(array){
+
         for (let index = 0; index < array.length-1; index++) {
             console.log(array[index].id+" "+array[index+1].id);
             if(array[index].id == array[index+1].id){//Si el id de un libro coincide con el del siguiente
