@@ -11,10 +11,15 @@ function iniciar() {
     var conectadoComo = document.getElementById("conectadoComo");
     var botonIniciarSesion = document.getElementById("botoniniciarSesion");
     var botonRegistrarse = document.getElementById("botonRegistrarse");
-    var botonCerrarSesion=document.getElementById("botonCerrarSesion");
-    var carrito=document.getElementById("carrito");
+    var botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    var botonCarrito = document.getElementById("carrito");
     var limite;
-    var imagenesCarrousel=document.getElementsByClassName("imagenCarrousel");
+    var imagenesCarrousel = document.getElementsByClassName("imagenCarrousel");
+    var leerMas = document.getElementsByClassName("leerMas");
+    var agregarCesta = document.getElementsByClassName("agregarCesta");
+    var cesta = new Array();
+    var numeroCompras=document.getElementById("numeroCompras");
+    console.log(agregarCesta);
 
     function getJSON(libro) {
         var xhr = new XMLHttpRequest(); //Se crea el objeto
@@ -24,13 +29,13 @@ function iniciar() {
             if (this.readyState == 4 && //para cuando se 
                 this.status == 200) { //reciba la respuesta
                 procesarJSON(this);
-                if(libro=="*"){
+                if (libro == "*") {
                     mostrarLibros(this);
                 }
-            }   
+            }
 
         };
-        
+
         xhr.send(); //enviar petición
     }
 
@@ -128,10 +133,45 @@ function iniciar() {
          */
         // for (let index = 0; index < imagenesCarrousel.length; index++) {
         //     imagenesCarrousel[index].src=libros[index].volumeInfo.imageLinks.thumbnail;
-            
+
         // }    
+
+        
+        function agregarACesta(titulo) {
+            for (let index = 0; index < libros.length; index++) {
+                if (libros[index].volumeInfo.title == titulo) { // A partir del título, se obtiene el objeto completo de ese libro
+                    cesta.push(libros[index]); // Y se añade a la cesta
+                    // var cestaJSON = new File(cesta, "cesta.txt", {
+                    //     type:"text/plain"
+                    // });
+                    console.log(cesta);
+                   numeroCompras.innerText=cesta.length;
+                    localStorage.setItem("cesta", JSON.stringify(cesta));
+                }
+
+            }
+
+            console.log(cesta);
+
+        }
+        /**
+         * Añadir libros a la cesta.
+         * Se añaden los libros a los que se ha hecho click en 
+         * "añadir al carrito"
+         */
+        for (let index = 0; index < agregarCesta.length; index++) {
+            agregarCesta[index].addEventListener("click", function () {
+                var titulo = this.parentElement.parentElement.previousElementSibling.previousElementSibling.innerText;
+                agregarACesta(titulo);
+                mostrarNotificacion();
+            })
+        }
+        
     }
-    function mostrarLibros(xhr){
+    /**
+     * Muestra los libros en el carrousel
+     */
+    function mostrarLibros(xhr) {
         var jsonDoc = JSON.parse(xhr.responseText);
         var libros = new Array();
         /*Obtener solamente los libros que tienen descripción y portada
@@ -142,16 +182,52 @@ function iniciar() {
                 libros.push(jsonDoc.items[index]);
             }
         }
-        
+
         for (let index = 0; index < imagenesCarrousel.length; index++) {
-            imagenesCarrousel[index].src=libros[index].volumeInfo.imageLinks.thumbnail;
-            
+            imagenesCarrousel[index].src = libros[index].volumeInfo.imageLinks.thumbnail;
+
         }
     }
-  
-    function cerrarSesion(){
+    function preguntar() {
+        Notification.requestPermission()
+            .then(resultado => {
+                console.log('El resultado es ', resultado)
+            })
+    }
+    function mostrarNotificacion() {
+        if (Notification.permission == 'granted') {
+            const notificacion = new Notification('Te notificamos...', {
+                body: "¡Libro añadido al carrito!"
+            });
+       
+        }
+    }
+    preguntar();
+    function cerrarSesion() {
         sessionStorage.setItem("conectado", "false");
         location.reload();
+    }
+    function muestraOculta(e) {
+        // for (let index = 0; index < leerMas.length; index++) {
+        //   if(leerMas[index].parentElement.parentElement.previousElementSibling.style.heigth=="200px" && leerMas[index].parentElement.parentElement.previousElementSibling.style.overflow=="hidden"){
+        //       leerMas[index].innerText="Leer menos";
+        //       leerMas[index].parentElement.parentElement.previousElementSibling.setAttribute("style", "");
+        //   }
+
+        // }
+
+        if (e.target.parentElement.parentElement.previousElementSibling.style.overflow == "hidden") {
+            console.log("aaaaaaaa");
+            e.target.innerText = "Leer menos";
+            e.target.parentElement.parentElement.previousElementSibling.setAttribute("style", "");
+        } else {
+            e.target.innerText = "Leer más";
+            e.target.parentElement.parentElement.previousElementSibling.setAttribute("style", "height:200px; overflow: hidden;");
+        }
+    }
+    for (let index = 0; index < leerMas.length; index++) {
+        leerMas[index].addEventListener("click", muestraOculta);
+
     }
     getJSON("*");
     if (sessionStorage.getItem("conectado") == "true") {
@@ -160,7 +236,7 @@ function iniciar() {
         console.log(botonRegistrarse);
         botonIniciarSesion.setAttribute("style", "display:none;");
         botonRegistrarse.setAttribute("style", "display:none;");
-        carrito.setAttribute("style","float:right;");
+        carrito.setAttribute("style", "float:right;");
         conectadoComo.setAttribute("style", "float:left;");
     } else {
         conectadoComo.setAttribute("style", "display:none;");
@@ -173,6 +249,10 @@ function iniciar() {
     })
     busqueda.addEventListener("click", function () {
         busqueda.value = "";
+    })
+
+    carrito.addEventListener("click", function(){
+        location.href="cesta.html";
     })
 
 
