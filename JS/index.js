@@ -18,7 +18,7 @@ function iniciar() {
     var leerMas = document.getElementsByClassName("leerMas");
     var agregarCesta = document.getElementsByClassName("agregarCesta");
     var cesta = new Array();
-    var numeroCompras=document.getElementById("numeroCompras");
+    var numeroCompras = document.getElementById("numeroCompras");
     console.log(agregarCesta);
 
     function getJSON(libro) {
@@ -136,21 +136,17 @@ function iniciar() {
 
         // }    
 
-        
-        function agregarACesta(titulo) {
+
+        function agregarACesta(descripcion) {
             for (let index = 0; index < libros.length; index++) {
-                if (libros[index].volumeInfo.title == titulo) { // A partir del título, se obtiene el objeto completo de ese libro
+                if (libros[index].volumeInfo.description == descripcion) { // A partir del título, se obtiene el objeto completo de ese libro
                     cesta.push(libros[index]); // Y se añade a la cesta
-                    // var cestaJSON = new File(cesta, "cesta.txt", {
-                    //     type:"text/plain"
-                    // });
-                    console.log(cesta);
-                   numeroCompras.innerText=cesta.length;
-                    localStorage.setItem("cesta", JSON.stringify(cesta));
+                    evitarDuplicados(cesta);
                 }
 
             }
-
+            numeroCompras.innerText = cesta.length;
+            localStorage.setItem("cesta", JSON.stringify(cesta));
             console.log(cesta);
 
         }
@@ -161,12 +157,12 @@ function iniciar() {
          */
         for (let index = 0; index < agregarCesta.length; index++) {
             agregarCesta[index].addEventListener("click", function () {
-                var titulo = this.parentElement.parentElement.previousElementSibling.previousElementSibling.innerText;
-                agregarACesta(titulo);
+                var descripcion = this.parentElement.parentElement.previousElementSibling.innerText;
+                agregarACesta(descripcion);
                 mostrarNotificacion();
             })
         }
-        
+
     }
     /**
      * Muestra los libros en el carrousel
@@ -190,16 +186,13 @@ function iniciar() {
     }
     function preguntar() {
         Notification.requestPermission()
-            .then(resultado => {
-                console.log('El resultado es ', resultado)
-            })
     }
     function mostrarNotificacion() {
         if (Notification.permission == 'granted') {
             const notificacion = new Notification('Te notificamos...', {
                 body: "¡Libro añadido al carrito!"
             });
-       
+
         }
     }
     preguntar();
@@ -223,6 +216,18 @@ function iniciar() {
         } else {
             e.target.innerText = "Leer más";
             e.target.parentElement.parentElement.previousElementSibling.setAttribute("style", "height:200px; overflow: hidden;");
+        }
+    }
+    /**
+     * Evita los duplicados en el array de libros 
+     * comparando el id de cada uno de ellos
+     */
+    function evitarDuplicados(array){
+        for (let index = 0; index < array.length-1; index++) {
+            console.log(array[index].id+" "+array[index+1].id);
+            if(array[index].id == array[index+1].id){//Si el id de un libro coincide con el del siguiente
+                array.splice(index+1, 1);//Se borra
+            }
         }
     }
     for (let index = 0; index < leerMas.length; index++) {
@@ -251,8 +256,8 @@ function iniciar() {
         busqueda.value = "";
     })
 
-    carrito.addEventListener("click", function(){
-        location.href="cesta.html";
+    carrito.addEventListener("click", function () {
+        location.href = "cesta.html";
     })
 
 
