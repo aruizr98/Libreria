@@ -217,6 +217,7 @@ function iniciar() {
     preguntar();
     function cerrarSesion() {
         sessionStorage.setItem("conectado", "false");
+        localStorage.setItem("conectado", "false");
         location.reload();
     }
     function muestraOculta(e) {
@@ -255,7 +256,7 @@ function iniciar() {
 
     }
     getJSON("*");
-    if (sessionStorage.getItem("conectado") == "true") {
+    if (sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true") {
         conectadoComo.firstElementChild.innerText = "Conectado como: " + localStorage.getItem("nombreUsuario");
         console.log(botonIniciarSesion);
         console.log(botonRegistrarse);
