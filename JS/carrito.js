@@ -54,10 +54,13 @@ function iniciar() {
     })
     comprar.addEventListener("click", function () {
         if(sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true"){
-            for (let index = 0; index < usuarios.length; index++) {
+            for (var index = 0; index < usuarios.length; index++) {
                if(localStorage.getItem("nombreUsuario") == usuarios[index].nombre){
                 //pasar los libros de la cesta a otro array de objetos del usuario conectado.
-                cestaUsuarios[index]=datosCesta;
+                for (let j = 0; j < datosCesta.length; j++) {
+                    cestaUsuarios[index].push(datosCesta[j]);
+                    
+                }
                 localStorage.setItem("cestaUsuarios", JSON.stringify(cestaUsuarios));
                 alert("libros añadidos");   
                 location.href="Index.html";
