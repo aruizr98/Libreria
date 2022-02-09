@@ -15,7 +15,9 @@ function iniciar() {
     //     }
     // ]
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var cestaUsuarios=JSON.parse(localStorage.getItem("cestaUsuarios"));
     console.log(usuarios);
+    console.log(cestaUsuarios);
     var registro = document.getElementById("registro");
     var nombreUsuario = document.getElementsByName("nombreUsuario")[0];
     var emailRegistro = document.getElementsByName("email")[0];
@@ -39,16 +41,19 @@ function iniciar() {
             email: emailRegistro.value,
             password: passwordRegistro[0].value
         }
-        if(usuarios!=null){
+        if(usuarios!=null && cestaUsuarios != null){
           usuarios.push(nuevoUsuario);  
+          cestaUsuarios.push(new Array());
         }else{
             usuarios=[nuevoUsuario];
+            cestaUsuarios=[new Array()];
         }
         
         console.log("Usuario añadido");
         console.log(usuarios);
         localStorage.setItem("usuarios", JSON.stringify(usuarios));
-        resultadoRegistro.innerText = "Registro realizado correctamente."
+        localStorage.setItem("cestaUsuarios", JSON.stringify(cestaUsuarios));
+        //resultadoRegistro.innerText = "Registro realizado correctamente."
         location.href = "Index.html";
     })
 }
