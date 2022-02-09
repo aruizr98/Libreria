@@ -18,6 +18,7 @@ function iniciar() {
     var imagenesCarrousel = document.getElementsByClassName("imagenCarrousel");
     var leerMas = document.getElementsByClassName("leerMas");
     var agregarCesta = document.getElementsByClassName("agregarCesta");
+    var comprar=document.getElementsByClassName("botonComprar");
     var cesta = new Array();
     var numeroCompras = document.getElementById("numeroCompras");
     console.log(agregarCesta);
@@ -181,7 +182,14 @@ function iniciar() {
                // mostrarNotificacion(this.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText);
             })
         }
-
+        for (let index = 0; index < comprar.length; index++) {
+            comprar[index].addEventListener("click", function(){
+                var descripcion = this.parentElement.parentElement.previousElementSibling;
+                agregarACesta(descripcion);
+                location.href="cesta.html";
+            })
+            
+        }
     }
     /**
      * Muestra los libros en el carrousel
