@@ -6,6 +6,8 @@ function iniciar() {
     var formulario = document.getElementById("inicioSesion");
     var mensaje = document.getElementById("mensaje");
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var registrarse=document.getElementById("registrate");
+    var recuerdame=document.getElementById("recuerdame");
     console.log(usuarios);
 
     formulario.addEventListener("submit", function (e) {
@@ -32,6 +34,11 @@ function iniciar() {
                 mensaje.classList = "";
                 correcto = true;
                 localStorage.setItem("nombreUsuario", usuarios[index].nombre);
+                if(recuerdame.checked){
+                   localStorage.setItem("conectado", "true");
+                }else{
+                    localStorage.setItem("conectado", "false");
+                }
                 location.href = "Index.html";
             }
         }
@@ -41,5 +48,7 @@ function iniciar() {
             sessionStorage.setItem("conectado", "false");
         }
     });
-
+    registrarse.addEventListener("click", function(){
+        location.href="registro.html";
+    })
 }
