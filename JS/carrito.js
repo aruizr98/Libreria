@@ -5,7 +5,7 @@ function iniciar() {
     var vaciar = document.getElementById("vaciar");
     var comprar=document.getElementById("comprar");
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    var cestaUsuarios = JSON.parse(localStorage.getItem("cestaUsuarios"));
+    var bibliotecaUsuarios = JSON.parse(localStorage.getItem("bibliotecaUsuarios"));
 
     if (datosCesta == null) { // Si la cesta está vacía
         var div = document.createElement("div");
@@ -58,15 +58,15 @@ function iniciar() {
                if(localStorage.getItem("nombreUsuario") == usuarios[index].nombre){
                 //pasar los libros de la cesta a otro array de objetos del usuario conectado.
                 for (let j = 0; j < datosCesta.length; j++) {
-                    cestaUsuarios[index].push(datosCesta[j]);
+                    bibliotecaUsuarios[index].push(datosCesta[j]);
                     
                 }
-                localStorage.setItem("cestaUsuarios", JSON.stringify(cestaUsuarios));
+                localStorage.setItem("bibliotecaUsuarios", JSON.stringify(bibliotecaUsuarios));
                 alert("libros añadidos");   
                 location.href="Index.html";
                }
             }
-            console.log(cestaUsuarios); 
+            console.log(bibliotecaUsuarios); 
             //Crear un array de objetos para cada usuario registrado y añadir los libros que hay en la cesta al usuario que esté conectado.
         }else{
             location.href="iniciarSesion.html";
