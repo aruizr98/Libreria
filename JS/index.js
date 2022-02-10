@@ -257,21 +257,28 @@ function iniciar() {
                 Si el libro está a la venta, se muestra el precio y los botones de compra
                 */
                 precios[index].innerText = libros[index].saleInfo.listPrice.amount + "€";
+                precios[index].setAttribute("style", "cursor:default");
                 botonesCompra[index].setAttribute("style", "display:block;");
                 descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:1;");
+                ofertas[index].setAttribute("style", "cursor:default");
 
                 if (libros[index].saleInfo.retailPrice.amount < libros[index].saleInfo.listPrice.amount) {
                     /*
                     Si el libro tiene oferta, se tachará el precio sin oferta y se mostrará a su lado el nuevo precio
                     */
-                   console.log(precios[index].parentElement.parentElement.parentElement.parentElement.parentElement);
-                   precios[index].parentElement.parentElement.parentElement.parentElement.setAttribute("style", "background-color:lightblue");
-                    precios[index].classList = "precio text-decoration-line-through";
+                //    console.log(precios[index].parentElement.parentElement.parentElement.parentElement.parentElement);
+                //    precios[index].parentElement.parentElement.parentElement.parentElement.setAttribute("style", "background-color:lightblue");
+                    precios[index].classList = "btn btn-success precio text-decoration-line-through";
+                    precios[index].setAttribute("style", "cursor:default; opacity:0.5;");
                     ofertas[index].innerText = libros[index].saleInfo.retailPrice.amount + " €";
+                    ofertas[index].classList="oferta btn btn-warning";
+                    
 
                 } else { //Si no tiene oferta, se deja todo como estaba para que en futuras búsquedas no de información errónea
-                    precios[index].classList = "precio";
+                    precios[index].classList = "btn btn-success precio";
+                    precios[index].setAttribute("style", "cursor:default;opacity:1;");
                     ofertas[index].innerText = "";
+                    ofertas[index].classList="oferta";
                 }
             } else {
                 /*Si no está a la venta el libro aparecerá con baja opacidad,
@@ -280,6 +287,7 @@ function iniciar() {
                 */
                 precios[index].classList = "precio";
                 ofertas[index].innerText = "";
+                ofertas[index].classList="oferta";
                 precios[index].innerText = "Producto no disponible";
                 botonesCompra[index].setAttribute("style", "display:none;");
                 descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:0.4;");
