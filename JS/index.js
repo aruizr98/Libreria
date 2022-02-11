@@ -80,8 +80,11 @@ function iniciar() {
         // }
 
         for (let index = 0; index < limite; index++) {
+           
             //Se añade la portada, la sinopsis y el título de cada libro
             portadas[index].setAttribute("src", libros[index].volumeInfo.imageLinks.thumbnail);
+            portadas[index].setAttribute("style", "cursor:pointer");
+            console.log(portadas[index])
             descripcion[index].innerText = libros[index].volumeInfo.description;
             titulos[index].innerText = libros[index].volumeInfo.title;
             autores[index].innerText=libros[index].volumeInfo.authors[0];
@@ -246,8 +249,10 @@ function iniciar() {
         // }
 
         for (let index = 0; index < limite; index++) {
+            sessionStorage.setItem("resultado", JSON.stringify(libros));
             //Se añade la portada, la sinopsis y el título de cada libro
             portadas[index].setAttribute("src", libros[index].volumeInfo.imageLinks.thumbnail);
+            portadas[index].setAttribute("style", "cursor:pointer;");
             descripcion[index].innerText = libros[index].volumeInfo.description;
             titulos[index].innerText = libros[index].volumeInfo.title;
             autores[index].innerText=libros[index].volumeInfo.authors[0];
@@ -379,7 +384,7 @@ function iniciar() {
             }
         }
 
-        for (let index = 0; index < imagenesCarrousel.length; index++) {
+        for (let index = 0; index < libros.length; index++) {
             imagenesCarrousel[index].src = libros[index].volumeInfo.imageLinks.thumbnail;
 
         }
@@ -468,7 +473,8 @@ function iniciar() {
     for (let index = 0; index < portadas.length; index++) {
        portadas[index].addEventListener("click",function(){
           // console.log(this.nextElementSibling.children[0]);
-           localStorage.setItem("libroInfo", this.nextElementSibling.children[0].innerText);
+           localStorage.setItem("libroInfo", this.nextElementSibling.children[3].innerText);
+           console.log(this.nextElementSibling.children[3].innerText);
            location.href="infoLibro.html";
        })
         
