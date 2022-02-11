@@ -35,7 +35,9 @@ function iniciar() {
 
                 }
                 isbn.innerHTML+="</ul>";
+                if(libros[index].volumeInfo.pageCount !=undefined){
             numeroPaginas.innerHTML = "<strong>Número de páginas</strong>: " + libros[index].volumeInfo.pageCount;
+                }
             if (libros[index].volumeInfo.publisher != undefined) {
                 editorial.innerHTML = "<strong>Editorial: </strong>: " + libros[index].volumeInfo.publisher;
             }
