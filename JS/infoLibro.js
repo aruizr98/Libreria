@@ -118,17 +118,19 @@ function iniciar() {
                     }
                 }
             }
-            for (let index = 0; index < botones.length; index++) {
-               botones[index].addEventListener("click", function(){
-                   if(botones[index].innerText=="Comprar"){
+            for (let h = 0; h < botones.length; h++) {
+               botones[h].addEventListener("click", function(){
+                   if(botones[h].innerText=="Comprar"){
                       
                    var descripcion = this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
                      agregarACesta(descripcion);
                      location.href = "cesta.html";
-                   }else{
+                   }else if(botones[h].innerText=="Añadir al carrito"){
                     var descripcion = this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
                     agregarACesta(descripcion);
                     console.log("AGREGADO")
+                   }else{
+                       location.href=libros[index].accessInfo.webReaderLink;
                    }
                })
                 
