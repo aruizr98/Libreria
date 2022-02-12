@@ -62,7 +62,8 @@ function iniciar() {
                     
                 }
                 localStorage.setItem("bibliotecaUsuarios", JSON.stringify(bibliotecaUsuarios));
-                alert("libros añadidos");   
+                alert("libros añadidos");  
+                localStorage.removeItem("cesta"); 
                 location.href="Index.html";
                }
             }
