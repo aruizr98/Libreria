@@ -14,6 +14,11 @@ function iniciar() {
     var formatos = document.getElementById("formatos");
     var libros = JSON.parse(sessionStorage.getItem("resultado"));
     var botones = document.getElementsByClassName("boton");
+    if(localStorage.getItem("cesta") != null){
+        var cesta=JSON.parse(localStorage.getItem("cesta"));
+    }else{
+        var cesta=new Array();
+    }
     console.log(libroInfo);
     console.log(libros);
     var encontrado = false;
@@ -62,6 +67,71 @@ function iniciar() {
                 for (let index = 0; index < botones.length; index++) {
                     botones[index].setAttribute("style", "display:none;");
                 }
+            }
+            preguntar();
+            function preguntar() {
+                Notification.requestPermission()
+            }
+            function mostrarNotificacion(titulo) {
+                if (Notification.permission == 'granted') {
+                    const notificacion = new Notification('Te notificamos...', {
+                        body: titulo + " añadido al carrito!"
+                    });
+        
+                }
+            }
+            function agregarACesta(descripcion) {
+                var titulo;
+                var contador = 0;
+                for (let index = 0; index < libros.length; index++) {
+                    if (libros[index].volumeInfo.description == descripcion) { // A partir de la descripción, se obtiene el objeto completo de ese libro
+                        titulo = libros[index].volumeInfo.title;
+                        cesta.push(libros[index]); // Y se añade a la cesta
+                        for (let index = 0; index < cesta.length; index++) {
+                            if (cesta[index].volumeInfo.title == titulo) {
+                                contador++;
+                            }
+    
+                        }
+                        evitarDuplicados(cesta); // Se eliminan los posibles duplicados
+                        // mostrarNotificacion(descripcion.previousElementSibling.previousElementSibling.previousElementSibling.innerText);
+                        //mostrarNotificacion(libros[index].volumeInfo.title);
+    
+                    }
+    
+                }
+                if (titulo != undefined && contador == 1) {
+                    mostrarNotificacion(titulo);
+                }
+    
+            
+                localStorage.setItem("cesta", JSON.stringify(cesta));
+                console.log(cesta);
+    
+            }
+            function evitarDuplicados(array) {
+
+                for (let index = 0; index < array.length - 1; index++) {
+                    console.log(array[index].id + " " + array[index + 1].id);
+                    if (array[index].id == array[index + 1].id) {//Si el id de un libro coincide con el del siguiente
+                        array.splice(index + 1, 1);//Se borra
+                    }
+                }
+            }
+            for (let index = 0; index < botones.length; index++) {
+               botones[index].addEventListener("click", function(){
+                   if(botones[index].innerText=="Comprar"){
+                      
+                   var descripcion = this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+                     agregarACesta(descripcion);
+                     location.href = "cesta.html";
+                   }else{
+                    var descripcion = this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+                    agregarACesta(descripcion);
+                    console.log("AGREGADO")
+                   }
+               })
+                
             }
 
         }
