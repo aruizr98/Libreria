@@ -1,0 +1,10 @@
+
+.col{
+    transition:all 400ms;
+}
+.col:hover{
+    transform:scale(1.04);
+}
+/* #listaMenu li a{
+    color: #bf0000;
+} */
