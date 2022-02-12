@@ -407,19 +407,21 @@ function iniciar() {
 
     }
     microfono.addEventListener("click", function(){
+        busqueda.value="";
         speech.start();
         speech.onstart = function () {
             busqueda.setAttribute("placeholder", "Escuchando...");
         }
         speech.onspeechend = function () {
-            busqueda.setAttribute("placeholder", "Has terminado de hablar.");
+            busqueda.setAttribute("placeholder", "Burcar");
             speech.stop();
         }
         speech.onresult = function (e) {
             var transcript = e.results[0][0].transcript;
             var confidence = e.results[0][0].confidence;
            // alert(`has dicho ${transcript}. Fiabilidad: ${parseInt(confidence*100)}%`);
-            busqueda.value=$(transcript);
+            busqueda.value=transcript;
+            getJSON(busqueda.value);
         }
     })
 
