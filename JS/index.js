@@ -50,10 +50,10 @@ function iniciar() {
         /*Obtener solamente los libros que tienen descripción y portada
          para que no aparezca undefined en la descripción en caso de no tenerla.
         */
-         filtroPrecio.addEventListener("click", function(){
-            limitePrecio=parseInt(this.value);
-            console.log(limitePrecio);
-
+        for (let index = 0; index < libros.length; index++) {
+           
+            
+        
             if (libros[index].saleInfo.saleability == "FOR_SALE") {
                 /*
                 Si el libro está a la venta, se muestra el precio y los botones de compra
@@ -98,7 +98,7 @@ function iniciar() {
                 descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:0.4;");
             }
         
-        })
+        }
         for (let index = 0; index < jsonDoc.items.length; index++) {
             if (jsonDoc.items[index].volumeInfo.description != undefined && jsonDoc.items[index].volumeInfo.imageLinks != undefined ) {
                 libros.push(jsonDoc.items[index]);
