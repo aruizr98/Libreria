@@ -113,9 +113,13 @@ function iniciar() {
                 }
                 contador = 0;
             }
-
-            agregarLibros(bibliotecas[index]);
-            var tamanyoReal=contenedorLibros.children.length;
+            if (bibliotecas[index].length > 0) {
+                agregarLibros(bibliotecas[index]);
+            } else {
+                contenedorLibros.innerHTML="<h2 class='w-100'>Tu biblioteca está vacía</h2>";
+              contenedorLibros.classList="mx-auto";
+            }
+            var tamanyoReal = contenedorLibros.children.length;
             for (let j = 0; j < bibliotecas[index].length; j++) {
                 autores.push(bibliotecas[index][j].volumeInfo.authors[0]);
                 generos.push(bibliotecas[index][j].volumeInfo.categories[0]);
@@ -133,7 +137,7 @@ function iniciar() {
                 input.addEventListener("click", function () {
                     resultado = new Array();
                     for (let j = 0; j < bibliotecas[index].length; j++) {
-                        if (bibliotecas[index][j].volumeInfo.authors [0] == this.id) {//Si el libro no es de la categoría seleccionada
+                        if (bibliotecas[index][j].volumeInfo.authors[0] == this.id) {//Si el libro no es de la categoría seleccionada
                             //    bibliotecas[index].splice(j, 1);//Se elimina del array
                             //    j--;
                             resultado.push(bibliotecas[index][j]);
@@ -148,19 +152,19 @@ function iniciar() {
                     eliminarLibros(todos);
                     ocultarLibros(contenedorLibros.children);
                     agregarLibros(resultado);
-                   
+
 
                 })
                 botonTodosAutores.addEventListener("click", function () {
                     // mostrarLibros(contenedorLibros.children);
-                 
+
                     for (let index = 0; index < contenedorLibros.children.length; index++) {
-                        if(index < tamanyoReal){
-                        contenedorLibros.children[index].setAttribute("style", "display:''");//Se meustran los libros que estaban ocultos
-                        }else{
+                        if (index < tamanyoReal) {
+                            contenedorLibros.children[index].setAttribute("style", "display:''");//Se meustran los libros que estaban ocultos
+                        } else {
                             contenedorLibros.children[index].setAttribute("style", "display:none"); //Y se ocultan los resultados, si es que los había
                         }
-                        
+
                     }
                 })
                 filtradoPorAutor.append(input);
@@ -192,19 +196,19 @@ function iniciar() {
                     eliminarLibros(todos);
                     ocultarLibros(contenedorLibros.children);
                     agregarLibros(resultado);
-                   
+
 
                 })
                 botonTodosGeneros.addEventListener("click", function () {
                     // mostrarLibros(contenedorLibros.children);
-                 
+
                     for (let index = 0; index < contenedorLibros.children.length; index++) {
-                        if(index < tamanyoReal){
-                        contenedorLibros.children[index].setAttribute("style", "display:''");//Se meustran los libros que estaban ocultos
-                        }else{
+                        if (index < tamanyoReal) {
+                            contenedorLibros.children[index].setAttribute("style", "display:''");//Se meustran los libros que estaban ocultos
+                        } else {
                             contenedorLibros.children[index].setAttribute("style", "display:none"); //Y se ocultan los resultados, si es que los había
                         }
-                        
+
                     }
                 })
                 filtradoPorGenero.append(input);
