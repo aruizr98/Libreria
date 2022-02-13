@@ -15,22 +15,22 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputName">Nombre de usuario:</label>
-                <input type="text" class="form-control" id="inputName" name="nombreUsuario" placeholder="Nombre de usuario">
+                <input type="text" class="form-control" id="inputName" name="nombreUsuario" placeholder="Nombre de usuario" maxlength="15" pattern="[A-Za-z ]{2,15}" title="Introduce entre 2 y 15 letras" required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email">
+                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email" required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Contraseña</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" name="password">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" name="password"  pattern="[A-Za-z0-9 ]{2,15}" title="Introduce entre 2 y 15 letras y números" required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword42">Repite la contraseña</label>
-                <input type="password" class="form-control" id="inputPassword42" placeholder="Contraseña" name="password">
+                <input type="password" class="form-control" id="inputPassword42" placeholder="Contraseña" name="password"  pattern="[A-Za-z0-9 ]{2,15}" title="Introduce entre 2 y 15 letras y números" required>
               </div>
             </div>
-            
+            <p id="mensajeError" class="bg-danger w-50 mt-3 text-white"></p>
             <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
             <span class="bg-success" id="resultadoRegistro"></span>
           </form>
