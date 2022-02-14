@@ -81,6 +81,7 @@ function iniciar() {
                 localStorage.setItem("usuarios", JSON.stringify(usuarios));
                 localStorage.setItem("nombreUsuario", nombreUsuario.value);
                 alert("Usuario editado correctamente.");
+                location.href="Index.html";
             }
 
             }

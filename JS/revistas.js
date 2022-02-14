@@ -29,12 +29,12 @@ function iniciar() {
 
     function getJSON(libro) {
         var xhr = new XMLHttpRequest(); //Se crea el objeto
-        xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + libro, true); //Abrir una petición
+        xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=" + libro+"&printType=magazines", true); //Abrir una petición
         xhr.onreadystatechange = function () { //función callback
             if (this.readyState == 4 && //para cuando se 
                 this.status == 200) { //reciba la respuesta
                 procesarJSON(this);
-                if (libro == "*") {
+                if (libro == "coche") {
                     mostrarLibros(this);
                 }
             }
@@ -54,49 +54,6 @@ function iniciar() {
            
             
         
-            if (libros[index].saleInfo.saleability == "FOR_SALE") {
-                /*
-                Si el libro está a la venta, se muestra el precio y los botones de compra
-                */
-               if(libros[index].saleInfo.retailPrice.amount < limitePrecio){
-                   precios[index].innerText = libros[index].saleInfo.listPrice.amount + "€";
-                precios[index].setAttribute("style", "cursor:default");
-                botonesCompra[index].setAttribute("style", "display:block;");
-                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:1;");
-                ofertas[index].setAttribute("style", "cursor:default");
-
-                if (libros[index].saleInfo.retailPrice.amount < libros[index].saleInfo.listPrice.amount) {
-                    /*
-                    Si el libro tiene oferta, se tachará el precio sin oferta y se mostrará a su lado el nuevo precio
-                    */
-                    //    console.log(precios[index].parentElement.parentElement.parentElement.parentElement.parentElement);
-                    //    precios[index].parentElement.parentElement.parentElement.parentElement.setAttribute("style", "background-color:lightblue");
-                    precios[index].classList = "btn btn-success precio text-decoration-line-through";
-                    precios[index].setAttribute("style", "cursor:default; opacity:0.5;");
-                    ofertas[index].innerText = libros[index].saleInfo.retailPrice.amount + "€";
-                    ofertas[index].classList = "oferta btn btn-warning";
-
-
-                } else { //Si no tiene oferta, se deja todo como estaba para que en futuras búsquedas no de información errónea
-                    precios[index].classList = "btn btn-success precio";
-                    precios[index].setAttribute("style", "cursor:default;opacity:1;");
-                    ofertas[index].innerText = "";
-                    ofertas[index].classList = "oferta";
-                }
-               }
-                
-            } else {
-                /*Si no está a la venta el libro aparecerá con baja opacidad,
-                 se eliminan los botones de compra y en lugar del precio 
-                 se muestra que el producto no está disponible
-                */
-                precios[index].classList = "precio";
-                ofertas[index].innerText = "";
-                ofertas[index].classList = "oferta";
-                precios[index].innerText = "Producto no disponible";
-                botonesCompra[index].setAttribute("style", "display:none;");
-                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:0.4;");
-            }
         
         }
         for (let index = 0; index < jsonDoc.items.length; index++) {
@@ -142,51 +99,9 @@ function iniciar() {
             portadas[index].setAttribute("style", "cursor:pointer;");
             descripcion[index].innerText = libros[index].volumeInfo.description;
             titulos[index].innerText = libros[index].volumeInfo.title;
-            autores[index].innerText = libros[index].volumeInfo.authors[0];
+          
 
-            if (libros[index].saleInfo.saleability == "FOR_SALE") {
-                /*
-                Si el libro está a la venta, se muestra el precio y los botones de compra
-                */
-               if(libros[index].saleInfo.retailPrice.amount < limitePrecio){
-                   
-               }
-                precios[index].innerText = libros[index].saleInfo.listPrice.amount + "€";
-                precios[index].setAttribute("style", "cursor:default");
-                botonesCompra[index].setAttribute("style", "display:block;");
-                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:1;");
-                ofertas[index].setAttribute("style", "cursor:default");
-
-                if (libros[index].saleInfo.retailPrice.amount < libros[index].saleInfo.listPrice.amount) {
-                    /*
-                    Si el libro tiene oferta, se tachará el precio sin oferta y se mostrará a su lado el nuevo precio
-                    */
-                    //    console.log(precios[index].parentElement.parentElement.parentElement.parentElement.parentElement);
-                    //    precios[index].parentElement.parentElement.parentElement.parentElement.setAttribute("style", "background-color:lightblue");
-                    precios[index].classList = "btn btn-success precio text-decoration-line-through";
-                    precios[index].setAttribute("style", "cursor:default; opacity:0.5;");
-                    ofertas[index].innerText = libros[index].saleInfo.retailPrice.amount + "€";
-                    ofertas[index].classList = "oferta btn btn-warning";
-
-
-                } else { //Si no tiene oferta, se deja todo como estaba para que en futuras búsquedas no de información errónea
-                    precios[index].classList = "btn btn-success precio";
-                    precios[index].setAttribute("style", "cursor:default;opacity:1;");
-                    ofertas[index].innerText = "";
-                    ofertas[index].classList = "oferta";
-                }
-            } else {
-                /*Si no está a la venta el libro aparecerá con baja opacidad,
-                 se eliminan los botones de compra y en lugar del precio 
-                 se muestra que el producto no está disponible
-                */
-                precios[index].classList = "precio";
-                ofertas[index].innerText = "";
-                ofertas[index].classList = "oferta";
-                precios[index].innerText = "Producto no disponible";
-                botonesCompra[index].setAttribute("style", "display:none;");
-                descripcion[index].parentElement.parentElement.setAttribute("style", "opacity:0.4;");
-            }
+         
 
         }
         for (let index = 0; index < descripcion.length; index++) {
@@ -312,7 +227,9 @@ function iniciar() {
         }
 
         for (let index = 0; index < libros.length; index++) {
+            if(imagenesCarrousel[index] != undefined){
             imagenesCarrousel[index].src = libros[index].volumeInfo.imageLinks.thumbnail;
+            }
 
         }
     }
@@ -368,7 +285,7 @@ function iniciar() {
         leerMas[index].addEventListener("click", muestraOculta);
 
     }
-    getJSON("*");
+    getJSON("coche");
     if (sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true") {
         conectadoComo.firstElementChild.innerHTML = "<strong>Conectado como: " + localStorage.getItem("nombreUsuario")+"</strong>";
         console.log(botonIniciarSesion);
@@ -400,7 +317,7 @@ function iniciar() {
     for (let index = 0; index < portadas.length; index++) {
         portadas[index].addEventListener("click", function () {
             // console.log(this.nextElementSibling.children[0]);
-            localStorage.setItem("libroInfo", this.nextElementSibling.children[3].innerText);
+            localStorage.setItem("libroInfo", this.nextElementSibling.children[2].innerText);
             console.log(this.nextElementSibling.children[3].innerText);
             location.href = "infoLibro.html";
         })
