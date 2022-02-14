@@ -25,6 +25,10 @@ function iniciar() {
     var microfono=document.getElementById("microfono");
     const SpeechRecognition = webkitSpeechRecognition;
     const speech = new SpeechRecognition();
+    var mensajeCookies=document.getElementById("mensajeCookies");
+    var aceptarCookies=document.getElementById("aceptarCookies");
+    var rechazarCookies=document.getElementById("rechazarCookies");
+    var botonesNavegacion=document.getElementsByClassName("botonNavegacion");
     console.log(agregarCesta);
 
     function getJSON(libro) {
@@ -424,5 +428,23 @@ function iniciar() {
             getJSON(busqueda.value);
         }
     })
-
+    if(localStorage.getItem("aceptarCookies") == "true"){
+        mensajeCookies.setAttribute("style", "display:none;");
+    }
+    aceptarCookies.addEventListener("click", function(){
+        localStorage.setItem("aceptarCookies", "true");
+        mensajeCookies.setAttribute("style", "display:none;");
+    })
+    rechazarCookies.addEventListener("click", function(){
+        localStorage.setItem("aceptarCookies", "false");
+        mensajeCookies.setAttribute("style", "display:none;");
+    })
+    for (let index = 0; index < botonesNavegacion.length; index++) {
+        botonesNavegacion[index].addEventListener("click", function(){
+           sessionStorage.setItem("cambiarColor", this.innerText);
+        })
+        if(botonesNavegacion[index].innerText==sessionStorage.getItem("cambiarColor")){
+            botonesNavegacion[index].classList="btn btn-warning mx-1 botonNavegacion";
+        }
+    }
 }
