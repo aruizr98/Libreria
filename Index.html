@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="dark-mode-bootstrap/dark-mode-bootstrap/dark-mode.css" />
   <link rel="stylesheet" href="bootstrap-5.1.3-examples/bootstrap-5.1.3-examples/sidebars/sidebars.css" />
-  <link rel="stylesheet" href="CSS/index.css"/>
+  <link rel="stylesheet" href="CSS/index.css" />
   <script type="text/javascript" src="JS/index.js"></script>
   <title>Página principal</title>
 </head>
@@ -17,6 +17,15 @@
   <header class="text-center">
     <h1><a href="index.html" class="text-decoration-none text-black">Librería</a></h1>
   </header>
+  <div id="mensajeCookies">
+    <h2 class="text-center">Esta web utiliza cookies</h2>
+    <h3 class="text-center">¿Quieres activar las cookies?</h3>
+    <div id="botonesCookies">
+      <button class="btn btn-success" id="aceptarCookies">Aceptar cookies</button>
+      <button class="btn btn-warning" id="rechazarCookies">Rechazar cookies</button>
+    </div>
+
+  </div>
   <nav class="p-3 ">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -28,7 +37,7 @@
 
         <ul id="listaMenu" class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mx-auto">
           <li class="nav-item dropdown">
-            <a class="btn btn-success mx-1" onclick="location.href='index.html'">
+            <a class="btn btn-success mx-1 botonNavegacion" onclick="location.href='index.html'">
               Inicio
             </a>
             <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -38,7 +47,7 @@
             </ul> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="btn btn-success mx-1" onclick="location.href='librosGratis.html'">
+            <a class="btn btn-success mx-1 botonNavegacion" onclick="location.href='librosGratis.html'">
               Libros gratis
             </a>
             <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -48,7 +57,7 @@
             </ul> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="btn btn-success mx-1" onclick="location.href='revistas.html'">
+            <a class="btn btn-success mx-1 botonNavegacion" onclick="location.href='revistas.html'">
               Revistas
             </a>
             <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -58,7 +67,7 @@
             </ul> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="btn btn-success mx-1" onclick="location.href='#'">
+            <a class="btn btn-success mx-1 botonNavegacion" onclick="location.href='#'">
               Sobre Nosotros
             </a>
             <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -68,7 +77,7 @@
             </ul> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="btn btn-success mx-1" onclick="location.href='#'">
+            <a class="btn btn-success mx-1 botonNavegacion" onclick="location.href='#'">
               Aviso Legal
             </a>
             <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -77,19 +86,21 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul> -->
           </li>
-        
+
 
         </ul>
-        <button class="btn p-0" id="microfono" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic-fill pr-5" viewBox="0 0 16 16">
-          <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
-          <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
-        </svg></button>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" >
+        <button class="btn p-0" id="microfono"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            fill="currentColor" class="bi bi-mic-fill pr-5" viewBox="0 0 16 16">
+            <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+            <path
+              d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+          </svg></button>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
           <input type="search" class="form-control form-control-dark" placeholder="Buscar" aria-label="Search"
-            id="busqueda" >
-            
+            id="busqueda">
+
         </form>
-        
+
 
         <div class="text-end">
           <button onclick="location.href='iniciarSesion.html'" type="button" class="btn btn-outline-primary me-2 "
@@ -223,7 +234,7 @@
 
   <!--Contenido-->
   <div id="contenido" class="d-flex">
-    
+
     <!--Fin barra lateral-->
     <div class="album py-5  float-right mx-auto">
       <div class="container">
@@ -471,7 +482,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-  </script>
+</script>
 <script type="text/javascript" src="dark-mode-bootstrap/dark-mode-bootstrap/dark-mode-switch.js"></script>
 <script type="text/javascript" src="dark-mode-bootstrap/dark-mode-bootstrap/dark-mode-switch.min.js"></script>
 
