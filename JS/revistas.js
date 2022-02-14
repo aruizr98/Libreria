@@ -25,6 +25,7 @@ function iniciar() {
     var microfono=document.getElementById("microfono");
     const SpeechRecognition = webkitSpeechRecognition;
     const speech = new SpeechRecognition();
+    var botonesNavegacion=document.getElementsByClassName("botonNavegacion");
     console.log(agregarCesta);
 
     function getJSON(libro) {
@@ -341,5 +342,12 @@ function iniciar() {
             getJSON(busqueda.value);
         }
     })
-
+    for (let index = 0; index < botonesNavegacion.length; index++) {
+        botonesNavegacion[index].addEventListener("click", function(){
+           sessionStorage.setItem("cambiarColor", this.innerText);
+        })
+        if(botonesNavegacion[index].innerText==sessionStorage.getItem("cambiarColor")){
+            botonesNavegacion[index].classList="btn btn-warning mx-1 botonNavegacion";
+        }
+    }
 }
