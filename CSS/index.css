@@ -1,3 +1,6 @@
+body{
+    background-color:lightyellow;
+}
 .col {
     transition: all 400ms;
 }
