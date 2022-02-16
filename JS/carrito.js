@@ -1,9 +1,10 @@
 window.addEventListener("load", iniciar);
+
 function iniciar() {
     var datosCesta = JSON.parse(localStorage.getItem("cesta"));
     var productosCesta = document.getElementById("productosCesta");
     var vaciar = document.getElementById("vaciar");
-    var comprar=document.getElementById("comprar");
+    var comprar = document.getElementById("comprar");
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var bibliotecaUsuarios = JSON.parse(localStorage.getItem("bibliotecaUsuarios"));
 
@@ -22,9 +23,9 @@ function iniciar() {
                 li.classList = "list-group-item d-flex justify-content-between lh-sm";
                 let div = document.createElement("div");
                 let h5 = document.createElement("h5");
-                let h6=document.createElement("h6");
+                let h6 = document.createElement("h6");
                 h5.innerText = datosCesta[index].volumeInfo.title;
-                h6.innerText=datosCesta[index].volumeInfo.authors[0];
+                h6.innerText = datosCesta[index].volumeInfo.authors[0];
                 h5.classList = "my-0";
                 div.append(h5);
                 div.append(h6);
@@ -53,24 +54,28 @@ function iniciar() {
         location.reload();
     })
     comprar.addEventListener("click", function () {
-        if(sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true"){
+        if (sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true") {
             for (var index = 0; index < usuarios.length; index++) {
-               if(localStorage.getItem("nombreUsuario") == usuarios[index].nombre){
-                //pasar los libros de la cesta a otro array de objetos del usuario conectado.
-                for (let j = 0; j < datosCesta.length; j++) {
-                    bibliotecaUsuarios[index].push(datosCesta[j]);
-                    
+                if (localStorage.getItem("nombreUsuario") == usuarios[index].nombre) {
+                    //pasar los libros de la cesta a otro array de objetos del usuario conectado.
+                    if (datosCesta != null) {
+                        for (let j = 0; j < datosCesta.length; j++) {
+                            bibliotecaUsuarios[index].push(datosCesta[j]);
+
+                        }
+                        localStorage.setItem("bibliotecaUsuarios", JSON.stringify(bibliotecaUsuarios));
+
+                        alert("libros añadidos");
+                        localStorage.removeItem("cesta");
+                        location.href = "Index.html";
+                    }else{
+                        alert("No hay libros en el carrito.");
+                    }
                 }
-                localStorage.setItem("bibliotecaUsuarios", JSON.stringify(bibliotecaUsuarios));
-                alert("libros añadidos");  
-                localStorage.removeItem("cesta"); 
-                location.href="Index.html";
-               }
             }
-            console.log(bibliotecaUsuarios); 
             //Crear un array de objetos para cada usuario registrado y añadir los libros que hay en la cesta al usuario que esté conectado.
-        }else{
-            location.href="iniciarSesion.html";
+        } else {
+            location.href = "iniciarSesion.html";
         }
     })
 }

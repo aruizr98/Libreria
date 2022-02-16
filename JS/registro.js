@@ -105,7 +105,15 @@ function iniciar() {
             console.log("Usuario añadido");
             console.log(usuarios);
             localStorage.setItem("usuarios", JSON.stringify(usuarios));
+            
             localStorage.setItem("bibliotecaUsuarios", JSON.stringify(bibliotecaUsuarios));
+            
+            if(localStorage.getItem("aceptarCookies") == "true"){
+                document.cookie="biblioteca="+localStorage.getItem("bibliotecaUsuarios");
+            
+                 document.cookie="usuarios="+localStorage.getItem("usuarios");
+               
+            }
             //resultadoRegistro.innerText = "Registro realizado correctamente."
             location.href = "Index.html";
         }
