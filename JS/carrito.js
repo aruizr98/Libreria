@@ -52,6 +52,7 @@ function iniciar() {
     vaciar.addEventListener("click", function () {
         localStorage.removeItem("cesta");
         location.reload();
+       
     })
     comprar.addEventListener("click", function () {
         if (sessionStorage.getItem("conectado") == "true" || localStorage.getItem("conectado") == "true") {

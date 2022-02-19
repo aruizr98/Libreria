@@ -10,7 +10,9 @@ body{
 .col:hover {
     transform: scale(1.04);
 }
-
+.botonComprar, .agregarCesta, .precio, .oferta{
+    font-size:11px;
+}
 /* #listaMenu li a{
     color: #bf0000;
 } */
